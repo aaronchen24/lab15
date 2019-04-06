@@ -228,15 +228,15 @@ generate approximations of pi.
    
 let aitken (s: float stream) : float stream =
   smap2 (-.)
-        s
+        (tail (tail s))
         (smap2 (/.)
                (smap (fun x -> x *. x)
-                     (smap2 (-.) s (tail s)))
+                     (smap2 (-.) (tail s) (tail (tail s))))
                (smap2 (+.)
                       (smap2 (-.)
-                             s
+                             (tail (tail s))
                              (smap (( *. ) 2.) (tail s)))
-                      (tail  (tail s)))) ;;
+                      s)) ;;
 
 (*......................................................................
 Exercise 7: Testing the acceleration
